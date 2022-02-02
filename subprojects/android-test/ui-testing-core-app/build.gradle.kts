@@ -104,10 +104,6 @@ instrumentation {
         fetchLogcatForIncompleteTests.set(true)
     }
 
-    afterEvaluate {
-        tasks.named("check").dependsOn(tasks.named("instrumentationUiKubernetes"))
-    }
-
     val emulator22 = CloudEmulator(
         name = "api22",
         api = 22,
@@ -173,6 +169,10 @@ instrumentation {
             }
         }
     }
+}
+
+tasks.check {
+    dependsOn(tasks.named("instrumentationUiKubernetes"))
 }
 
 fun emulatorImage(api: Int, label: String): String {
